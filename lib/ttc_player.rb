@@ -1,1 +1,1 @@
-#file containing player logic
+require_relative 'ttc_board'
