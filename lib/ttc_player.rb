@@ -5,7 +5,7 @@ class Player
   attr_accessor :score
 
   def initialize
-    @name = set_name
+    # @name = set_name
     @score = 0
   end
 
@@ -14,7 +14,8 @@ class Player
     input = gets.chomp
   end
 
-  def make_move
-    gets.chomp.to_i
+  def verify_input(input)
+    return input if input.match?(/^[0-9]$/)
   end
+
 end
