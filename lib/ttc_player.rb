@@ -14,8 +14,16 @@ class Player
     input = gets.chomp
   end
 
-  def verify_input(input)
-    return input if input.match?(/^[0-9]$/)
+  def enter_position
+    puts 'Enter a valid position between 1 and 9'
+    gets.chomp
   end
 
+  def verify_position(input)
+    input.match?(/^[0-9]$/)
+  end
+
+  def validate_position
+    enter_position until verify_position(enter_position)
+  end
 end
