@@ -8,6 +8,7 @@ class Game
     @board = Board.new.board
     @first = Player.new
     @second = Player.new
+    @old_moves = []
     set_player_sign
   end
 
@@ -16,8 +17,15 @@ class Game
     @second.sign = 'O'
   end
 
-  def update_board(cell, player)
-    player == @first ? @board[cell] = @first.sign : @board[cell] = @second.sign 
+  def set_cell(player)
+    player == @first ? @first.enter_position : @second.enter_position
+  end
+
+  def record_move(player)
+    @old_moves << set_cell(player)
+  end
+
+  def update_board(player)
+    player == @first ? @board[set_cell(player)] = @first.sign : @board[set_cell(player)] = @second.sign
   end
 end
-

@@ -15,20 +15,44 @@ describe Game do
     end
   end
 
-  
+  describe "#set_cell" do
+    subject(:game_cell) { described_class.new }
+
+    it 'specifies which cell the player is using and validates the move' do
+      # Player#enter_choice/enter_position should be stubbed to avoid gets loop!
+      allow(game_cell.first).to receive(:enter_position).and_return('5')
+      expect(game_cell.set_cell(game_cell.first)).to eq('5')
+    end
+  end
+
   describe "#udpate_board" do
-    subject(:game_board_update) { described_class.new }
+    subject(:game_board) { described_class.new }
 
     it "updates the board with the first player choice" do
-      cell = 1
-      game_board_update.update_board(cell, game_board_update.first)
-      expect(game_board_update.board[1]).to eq('X')
+      player = game_board.first
+      # stub to avoid the loop
+      allow(game_board.first).to receive(:enter_position).and_return('5')
+      expect(game_board.update_board(player)).to eq('X')
     end
 
     it "updates the board with the second player choice" do
-      cell = 1
-      game_board_update.update_board(cell, game_board_update.second)
-      expect(game_board_update.board[1]).to eq('O')
+      player = game_board.second
+      # stub to avoid the loop
+      allow(game_board.second).to receive(:enter_position).and_return('5')
+      expect(game_board.update_board(player)).to eq('O')
+    end
+  end
+
+  describe '#record_move' do
+    subject(:game_record) { described_class.new }
+
+    it 'stores in an array the player move to avoid repetition' do
+      old_moves = game_record.instance_variable_get(:@old_moves)
+      allow(game_record.first).to receive(:enter_position).and_return('5')
+      game_record.set_cell(game_record.first)
+      player = game_record.first
+      game_record.record_move(player)
+      expect(old_moves.include?('5')).to be_truthy
     end
   end
 end
