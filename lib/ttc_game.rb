@@ -17,15 +17,16 @@ class Game
     @second.sign = 'O'
   end
 
+  def record_move(move)
+    @old_moves << move
+  end
+  
   def set_cell(player)
     player == @first ? @first.enter_position : @second.enter_position
   end
 
-  def record_move(player)
-    @old_moves << set_cell(player)
-  end
-
   def update_board(player)
-    player == @first ? @board[set_cell(player)] = @first.sign : @board[set_cell(player)] = @second.sign
+    move = set_cell(player)
+    player == @first ? @board[move] = @first.sign : @board[move] = @second.sign
   end
 end

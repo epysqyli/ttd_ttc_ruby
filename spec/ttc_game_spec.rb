@@ -48,11 +48,9 @@ describe Game do
 
     it 'stores in an array the player move to avoid repetition' do
       old_moves = game_record.instance_variable_get(:@old_moves)
-      allow(game_record.first).to receive(:enter_position).and_return('5')
-      game_record.set_cell(game_record.first)
-      player = game_record.first
-      game_record.record_move(player)
-      expect(old_moves.include?('5')).to be_truthy
+      move = '5'
+      game_record.record_move(move)
+      expect(old_moves.include?(move)).to be_truthy
     end
   end
 end
