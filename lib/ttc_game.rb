@@ -17,16 +17,22 @@ class Game
     @second.sign = 'O'
   end
 
+  def new_move?(move)
+    !@old_moves.include?(move)
+  end
+
   def record_move(move)
     @old_moves << move
   end
-  
-  def set_cell(player)
-    player == @first ? @first.enter_position : @second.enter_position
-  end
 
   def update_board(player)
-    move = set_cell(player)
+    move = set_cell
+    record_move(move)
     player == @first ? @board[move] = @first.sign : @board[move] = @second.sign
   end
 end
+
+game = Game.new
+first = game.instance_variable_get(:@first)
+game.update_board(first)
+p game
