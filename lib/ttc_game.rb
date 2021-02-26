@@ -17,6 +17,16 @@ class Game
     @second.sign = 'O'
   end
 
+  def get_input
+    puts "Enter a number between 0 and 9"
+    gets.chomp
+  end
+
+  def validate_input
+    choice = get_input
+    choice if new_move?(choice) && choice.match?(/^[0-9]$/)
+  end
+
   def new_move?(move)
     !@old_moves.include?(move)
   end
@@ -26,13 +36,8 @@ class Game
   end
 
   def update_board(player)
-    move = set_cell
+    move = validate_input
     record_move(move)
     player == @first ? @board[move] = @first.sign : @board[move] = @second.sign
   end
 end
-
-game = Game.new
-first = game.instance_variable_get(:@first)
-game.update_board(first)
-p game

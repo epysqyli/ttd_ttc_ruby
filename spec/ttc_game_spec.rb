@@ -43,13 +43,15 @@ describe Game do
     end
   end
 
-  describe "#set_cell" do
-    subject(:game_cell) { described_class.new }
+  describe '#validate_input' do
+    subject(:game_input) { described_class.new }
 
-    xit 'specifies which cell the player is using and validates the move' do
-      # stub to avoid loop
-      allow(game_cell.first).to receive(:enter_position).and_return('5')
-      expect(game_cell.set_cell(game_cell.first)).to eq('5')
+    context 'when the player inputs a position' do
+      it 'checks the input for repetition and validity' do
+        input = '3'
+        allow(game_input).to receive(:get_input).and_return(input)
+        expect(game_input.validate_input).to eq(input)
+      end
     end
   end
 
@@ -57,17 +59,20 @@ describe Game do
     subject(:game_board) { described_class.new }
 
     it "updates the board with the first player choice" do
-      player = game_board.first
+      first = game_board.instance_variable_get(:@first)
+      board = game_board.instance_variable_get(:@board)
       # stub to avoid loop
-      allow(game_board.first).to receive(:enter_position).and_return('5')
-      expect(game_board.update_board(player)).to eq('X')
+      allow(game_board).to receive(:validate_input).and_return('5')
+      game_board.update_board(first)
+      expect(board['5']).to eq('X')
     end
 
     it "updates the board with the second player choice" do
-      player = game_board.second
-      # stub to avoid loop
-      allow(game_board.second).to receive(:enter_position).and_return('5')
-      expect(game_board.update_board(player)).to eq('O')
+      second = game_board.instance_variable_get(:@second)
+      board = game_board.instance_variable_get(:@board)
+      allow(game_board).to receive(:validate_input).and_return('3')
+      game_board.update_board(second)
+      expect(board['3']).to eq('O')
     end
   end
 end
