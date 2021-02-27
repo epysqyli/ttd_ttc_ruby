@@ -15,6 +15,29 @@ describe Game do
     end
   end
 
+  describe '#set_first' do
+    subject(:game_first) { described_class.new }
+
+    context 'when the game is started the first to go is set' do
+      it 'defines randomly who goes first' do
+        first = game_first.set_first
+        expect(first).to eq(game_first.one).or(eq(game_first.two))
+      end
+    end
+  end
+
+  describe '#set_order' do
+    subject(:game_order) { described_class.new }
+
+    it 'defines the turn order based on #set_first' do
+      one = game_order.instance_variable_get(:@one)
+      two = game_order.instance_variable_get(:@two)
+      allow(game_order.first).to receive(:puts).and_return(one)
+      turns = game_order.set_order
+      expect(turns[0]).to eq(two)
+    end
+  end
+
   describe '#record_move' do
     subject(:game_record) { described_class.new }
 
