@@ -99,4 +99,46 @@ describe Game do
       expect(board['3']).to eq('O')
     end
   end
+
+  describe '#check_round' do
+    subject(:game_round_check) { described_class.new }
+    
+    context 'when three signs are properly aligned' do
+      it 'increases the score of player one by 1 with combo 1-2-3' do
+        one = game_round_check.instance_variable_get(:@one)
+        board = game_round_check.instance_variable_get(:@board)
+        board['1'] = one.sign
+        board['2'] = one.sign
+        board['3'] = one.sign
+        expect{ game_round_check.check_round }.to change { one.score }.by(1)
+      end
+
+      it 'increases the score of player two by 1 with combo 1-2-3' do
+        two = game_round_check.instance_variable_get(:@two)
+        board = game_round_check.instance_variable_get(:@board)
+        board['1'] = two.sign
+        board['2'] = two.sign
+        board['3'] = two.sign
+        expect{ game_round_check.check_round }.to change { two.score }.by(1)
+      end
+
+      it 'increases the score of player one by 1 with combo 1-5-9' do
+        one = game_round_check.instance_variable_get(:@one)
+        board = game_round_check.instance_variable_get(:@board)
+        board['1'] = one.sign
+        board['5'] = one.sign
+        board['9'] = one.sign
+        expect{ game_round_check.check_round }.to change { one.score }.by(1)
+      end
+    end
+  end
+
+  describe '#check_round?' do
+    subject(:game_round_check?) { described_class.new }
+
+    it 'is set to true when one player wins a round' do
+      allow(game_round_check?).to receive(:check_round).and_return(true)
+      expect(game_round_check?.check_round?).to be_truthy
+    end
+  end
 end
