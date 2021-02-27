@@ -1,4 +1,4 @@
-require_relative '../lib/ttc_player'
+require_relative '../lib/player'
 
 describe Player do
 # not necessary to test puts methods as there is potentially nothing to go wrong

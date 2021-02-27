@@ -1,4 +1,4 @@
-require_relative 'ttc_board'
+require_relative 'board'
 
 class Player
   attr_reader :name

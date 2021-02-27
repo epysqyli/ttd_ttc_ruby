@@ -1,4 +1,4 @@
-require_relative '../lib/ttc_game'
+require_relative '../lib/game'
 
 describe Game do
 
@@ -32,9 +32,9 @@ describe Game do
     it 'defines the turn order based on #set_first' do
       one = game_order.instance_variable_get(:@one)
       two = game_order.instance_variable_get(:@two)
-      allow(game_order.first).to receive(:puts).and_return(one)
+      allow(game_order).to receive(:set_first).and_return(one)
       turns = game_order.set_order
-      expect(turns[0]).to eq(two)
+      expect(turns[0]).to eq(one)
     end
   end
 

@@ -1,4 +1,4 @@
-require_relative '../lib/ttc_board'
+require_relative '../lib/board'
 
 describe Board do
   subject(:board) { described_class.new }

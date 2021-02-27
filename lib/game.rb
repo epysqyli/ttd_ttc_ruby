@@ -1,15 +1,13 @@
-require_relative 'ttc_board'
-require_relative 'ttc_player'
+require_relative 'board'
+require_relative 'player'
 
 class Game
-  attr_reader :board, :one, :two, :first, :turns
+  attr_reader :board, :one, :two
 
   def initialize
     @board = Board.new.board
     @one = Player.new
     @two = Player.new
-    @first = set_first
-    @turns = set_order
     @old_moves = []
     set_player_sign
   end
@@ -27,9 +25,10 @@ class Game
   def set_order
     pair = []
     turns = []
-    @first == @one ? pair = [@two, @one] : pair = [@one, @two]
+    first = set_first
+    first == @one ? pair = [@two, @one] : pair = [@one, @two]
     turns.push(pair) until turns.length == 4
-    turns.flatten!.unshift(@first)
+    turns.flatten!.unshift(first)
   end
 
   def get_input
