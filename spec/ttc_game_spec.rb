@@ -7,10 +7,10 @@ describe Game do
 
     context 'when the game is started' do
       it "sets the sign 'X' to player 1 and 'O' to player 2" do
-        first_sign = game_signs.first.sign
-        second_sign = game_signs.second.sign
-        expect(first_sign).to eq('X')
-        expect(second_sign).to eq('O')
+        one_sign = game_signs.one.sign
+        two_sign = game_signs.two.sign
+        expect(one_sign).to eq('X')
+        expect(two_sign).to eq('O')
       end
     end
   end
@@ -58,20 +58,21 @@ describe Game do
   describe "#udpate_board" do
     subject(:game_board) { described_class.new }
 
-    it "updates the board with the first player choice" do
-      first = game_board.instance_variable_get(:@first)
+    it "updates the board with the one player choice" do
+      one = game_board.instance_variable_get(:@one)
       board = game_board.instance_variable_get(:@board)
       # stub to avoid loop
       allow(game_board).to receive(:validate_input).and_return('5')
-      game_board.update_board(first)
+      game_board.update_board(one)
       expect(board['5']).to eq('X')
     end
 
-    it "updates the board with the second player choice" do
-      second = game_board.instance_variable_get(:@second)
+    it "updates the board with the two player choice" do
+      two = game_board.instance_variable_get(:@two)
       board = game_board.instance_variable_get(:@board)
+      # stub to avoid loop
       allow(game_board).to receive(:validate_input).and_return('3')
-      game_board.update_board(second)
+      game_board.update_board(two)
       expect(board['3']).to eq('O')
     end
   end
