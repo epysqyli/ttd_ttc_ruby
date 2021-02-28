@@ -9,6 +9,7 @@ class Game
     @one = Player.new
     @two = Player.new
     @old_moves = []
+    @round_over = false
     @turn_count = 0
     set_player_sign
   end
@@ -76,20 +77,25 @@ class Game
   def check_round
     if (@board['1'] == @board['2'] && @board['2'] == @board['3'] && board['3'] == @one.sign) || (@board['4'] == @board['5'] && @board['5'] == @board['6'] && board['6'] == @one.sign) || (@board['7'] == @board['8'] && @board['8'] == @board['9'] && board['9'] == @one.sign) || (@board['1'] == @board['4'] && @board['4'] == @board['7'] && board['7'] == @one.sign) || (@board['2'] == @board['5'] && @board['5'] == @board['8'] && board['8'] == @one.sign) || (@board['3'] == @board['6'] && @board['6'] == @board['9'] && board['9'] == @one.sign) || (@board['1'] == @board['5'] && @board['5'] == @board['9'] && board['9'] == @one.sign) || (@board['3'] == @board['5'] && @board['5'] == @board['7'] && board['7'] == @one.sign)
       @one.score += 1
+      @round_over = true
     elsif (@board['1'] == @board['2'] && @board['2'] == @board['3'] && board['3'] == @two.sign) || (@board['4'] == @board['5'] && @board['5'] == @board['6'] && board['6'] == @two.sign) || (@board['7'] == @board['8'] && @board['8'] == @board['9'] && board['9'] == @two.sign) || (@board['1'] == @board['4'] && @board['4'] == @board['7'] && board['7'] == @two.sign) || (@board['2'] == @board['5'] && @board['5'] == @board['8'] && board['8'] == @two.sign) || (@board['3'] == @board['6'] && @board['6'] == @board['9'] && board['9'] == @two.sign) || (@board['1'] == @board['5'] && @board['5'] == @board['9'] && board['9'] == @two.sign) || (@board['3'] == @board['5'] && @board['5'] == @board['7'] && board['7'] == @two.sign)
       @two.score += 1
+      @round_over = true
     end
   end
 
   def check_score
     if @one.score == 2
       message = "Player #{@one.name} wins"
+      puts message
       @game_over = true
     elsif @two.score == 2
       message = "Player #{@two.name} wins"
+      puts message
       @game_over = true
     elsif @turn_count == 3 && @one.score == @two.score
       message = "Nobody wins"
+      puts message
       @game_over = true
     end
     return message
@@ -97,14 +103,27 @@ class Game
 
   def play_turn
     turns = set_order
-    until turns.empty?
+    until turns.empty? || @round_over == true
       player = turns.shift
       puts "Player #{player.name.capitalize}, it is your turn"
       update_board(player)
-      check_round
       display
+      check_round
     end
     @turn_count += 1
+    @round_over = false
     clean_board
+    puts "---NEW TURN IS STARTING---"
+    sleep 1
+  end
+
+  def play
+    until @game_over == true
+      play_turn
+      check_score
+    end
   end
 end
+
+game = Game.new
+game.play
