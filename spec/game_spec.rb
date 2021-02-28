@@ -133,12 +133,15 @@ describe Game do
     end
   end
 
-  describe '#check_round?' do
-    subject(:game_round_check?) { described_class.new }
+  describe '#check_score' do
+    subject(:game_score) { described_class.new }
 
-    it 'is set to true when one player wins a round' do
-      allow(game_round_check?).to receive(:check_round).and_return(true)
-      expect(game_round_check?.check_round?).to be_truthy
+    context 'when the game rounds are being played' do
+      it 'checks the score and stops the game accordingly' do
+        one = game_score.instance_variable_get(:@one)
+        one.score = 2
+        expect(game_score.check_score).to eq("Player #{one.name} wins")
+      end
     end
   end
 end
