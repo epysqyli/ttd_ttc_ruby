@@ -2,8 +2,7 @@ require_relative 'board'
 
 class Player
   attr_reader :name
-  attr_accessor :score
-  attr_accessor :sign
+  attr_accessor :score, :sign
 
   def initialize
     @name = set_name

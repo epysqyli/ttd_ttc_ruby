@@ -39,13 +39,13 @@ class Game
     pair = []
     turns = []
     first = set_first
-    first == @one ? pair = [@two, @one] : pair = [@one, @two]
+    pair = first == @one ? [@two, @one] : [@one, @two]
     turns.push(pair) until turns.length == 4
     turns.flatten!.unshift(first)
   end
 
   def get_input
-    puts "Enter a number between 0 and 9"
+    puts 'Enter a number between 0 and 9'
     gets.chomp
   end
 
@@ -57,7 +57,7 @@ class Game
       puts 'Enter a new move'
       choice = get_input
     end
-    return choice
+    choice
   end
 
   def new_move?(move)
@@ -71,7 +71,7 @@ class Game
   def update_board(player)
     move = validate_input
     record_move(move)
-    player == @one ? @board[move] = @one.sign : @board[move] = @two.sign
+    @board[move] = player == @one ? @one.sign : @two.sign
   end
 
   def check_round
@@ -87,18 +87,16 @@ class Game
   def check_score
     if @one.score == 2
       message = "Player #{@one.name} wins"
-      puts message
       @game_over = true
     elsif @two.score == 2
       message = "Player #{@two.name} wins"
-      puts message
       @game_over = true
     elsif @turn_count == 3 && @one.score == @two.score
-      message = "Nobody wins"
-      puts message
+      message = 'Nobody wins'
       @game_over = true
     end
-    return message
+    puts message
+    message
   end
 
   def play_turn
@@ -113,7 +111,7 @@ class Game
     @turn_count += 1
     @round_over = false
     clean_board
-    puts "---NEW TURN IS STARTING---"
+    puts '---NEW TURN IS STARTING---'
     sleep 1
   end
 
