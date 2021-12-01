@@ -1,7 +1,6 @@
 require_relative '../lib/game'
 
 describe Game do
-
   describe '#set_player_sign' do
     subject(:game_signs) { described_class.new }
 
@@ -78,10 +77,10 @@ describe Game do
     end
   end
 
-  describe "#udpate_board" do
+  describe '#udpate_board' do
     subject(:game_board) { described_class.new }
 
-    it "updates the board with the one player choice" do
+    it 'updates the board with the one player choice' do
       one = game_board.instance_variable_get(:@one)
       board = game_board.instance_variable_get(:@board)
       # stub to avoid loop
@@ -90,7 +89,7 @@ describe Game do
       expect(board['5']).to eq('X')
     end
 
-    it "updates the board with the two player choice" do
+    it 'updates the board with the two player choice' do
       two = game_board.instance_variable_get(:@two)
       board = game_board.instance_variable_get(:@board)
       # stub to avoid loop
@@ -102,7 +101,7 @@ describe Game do
 
   describe '#check_round' do
     subject(:game_round_check) { described_class.new }
-    
+
     context 'when three signs are properly aligned' do
       it 'increases the score of player one by 1 with combo 1-2-3' do
         one = game_round_check.instance_variable_get(:@one)
@@ -110,7 +109,7 @@ describe Game do
         board['1'] = one.sign
         board['2'] = one.sign
         board['3'] = one.sign
-        expect{ game_round_check.check_round }.to change { one.score }.by(1)
+        expect { game_round_check.check_round }.to change { one.score }.by(1)
       end
 
       it 'increases the score of player two by 1 with combo 1-2-3' do
@@ -119,7 +118,7 @@ describe Game do
         board['1'] = two.sign
         board['2'] = two.sign
         board['3'] = two.sign
-        expect{ game_round_check.check_round }.to change { two.score }.by(1)
+        expect { game_round_check.check_round }.to change { two.score }.by(1)
       end
 
       it 'increases the score of player one by 1 with combo 1-5-9' do
@@ -128,7 +127,7 @@ describe Game do
         board['1'] = one.sign
         board['5'] = one.sign
         board['9'] = one.sign
-        expect{ game_round_check.check_round }.to change { one.score }.by(1)
+        expect { game_round_check.check_round }.to change { one.score }.by(1)
       end
     end
   end

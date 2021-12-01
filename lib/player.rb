@@ -11,7 +11,7 @@ class Player
   end
 
   def set_name
-    puts 'Enter the player name'
+    # puts 'Enter the player name'
     gets.chomp
   end
 end
